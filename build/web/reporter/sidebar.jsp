@@ -29,7 +29,7 @@
           <li class="nav-item">
               <a class="nav-link" href="ForgetPassword.jsp">
               <span data-feather="bar-chart-2"></span>
-              <i class="fa fa-key"></i>  Change Profile
+              <i class="fa fa-key"></i>  Change Password
             </a>
           </li>
         </ul>

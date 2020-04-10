@@ -25,6 +25,9 @@
                 return;
             }
         %>
+
+
+
         <!-- Page Wrapper -->
         <div id="wrapper">
 
@@ -47,82 +50,53 @@
 
                             <!-- Page Heading -->
                             <div class="row">
-                                <%
-                                    String op = request.getParameter("op");
-                                    if(op==null || op.equals("")){
-                                        %>
-                                        <form>
-                                        <table class="table">
-                                            <tr>
-                                                <td>Name</td><td>current status</td><td>Action</td>
-                                            </tr>
-                                       <% ReporterDao rd = new ReporterDao();
-                                        ArrayList<Reporter> repo = rd.getAllRecords();
-                                        for(Reporter r : repo){
-                                            %>
-                                            <tr>
-                                                <td><%=r.getName()%></td>
-                                                <td><%=r.getStatus()%></td>
-                                                <td><input type="radio" name="status<%=r.getId()%>" id="s1" value="reject">reject
-                                                    <input type="radio" name="status<%=r.getId()%>" id="s2" value="block">block</td>
-                                                <td><input type="checkbox" name="check" id="check"></td>
-                                
-                                            </tr>   
-                                <%}%>
-                                        </table>
-                                    <input type="submit" name="submit" value="submit">
-                                        </form>
-                                        
-                                        <%
-                                            if(request.getParameter("submit")!=null){
-                                                String check_id = request.getParameter("check");
-                                                String status = request.getParameter("status");
-                                                System.out.println("check_id:"+check_id);
-                                                System.out.println("status:"+status);
-                                            }
-                                        %>
-                                  
-                                <%}     
-                                %>
-                                  
-                                    
-                                    
-                                  <%  if(op!=null && op.equalsIgnoreCase("update_status")){
+
+                            <%
+                                String op = request.getParameter("op");
+                                System.out.println("op for news:" + op);
+                                NewsDao nd = new NewsDao();
+                                News news = null;
+                                if (op != null && op.equalsIgnoreCase("update_status")) {
                                     int newsid = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : 0;
-                                    NewsDao nd = new NewsDao();
-                                    News news = nd.getById(newsid);
-                                %>
-                                <div class="card col col-md-10" style=" text-align: justify;text-justify: inter-word;">
-                                    <div class="card-body">
-                                        <h4 class="card-title"><%=news.getTitle() %></h4>
-                                        <p class="card-text"><%=news.getDescription()%></p>
-                                    </div>
-                                    <img class="card-img-bottom" src="../<%=news.getImage()%>" alt="Card image" style="width:20%">
-                                    <br/><br/>
-                                    <a href="<%=request.getHeader("referer")%>" class="btn btn-primary">Back </a>
-                                    <form method="post">
+                                    news = nd.getById(newsid);
+                            %>
+                            <div class="card col col-md-10" style=" text-align: justify;text-justify: inter-word;">
+                                <div class="card-body">
+                                    <h4 class="card-title"><%=news.getTitle()%></h4>
+                                    <p class="card-text"><%=news.getDescription()%></p>
+                                </div>
+                                <img class="card-img-bottom" src="../<%=news.getImage()%>" alt="Card image" style="width:20%">
+                                <br/><br/>
+                                <a href="<%=request.getHeader("referer")%>" class="btn btn-primary">Back </a>
+                                <form method="post">
                                     <h4>Change Status </h4>
-                                    <p><input type="radio" name="status" value="Pending" <%if(news.getStatus().equals("Pending"))out.println(" checked"); %>/>Pending </p>  
-                                    <p><input type="radio" name="status" value="Approved" <%if(news.getStatus().equals("Approved"))out.println(" checked"); %>/>Approved </p>
-                                    <p><input type="radio" name="status" value="Rejected" <%if(news.getStatus().equals("Rejected"))out.println(" checked"); %>/>Rejected </p>
-                                     
+                                    <p><input type="radio" name="status" value="Pending" <%if (news.getStatus().equals("Pending")) {
+                                            out.println(" checked");
+                                        } %>/>Pending </p>  
+                                    <p><input type="radio" name="status" value="Approved" <%if (news.getStatus().equals("Approved")) {
+                                            out.println(" checked");
+                                        } %>/>Approved </p>
+                                    <p><input type="radio" name="status" value="Rejected" <%if (news.getStatus().equals("Rejected")) {
+                                            out.println(" checked");
+                                        } %>/>Rejected </p>
+
                                     <p>Reason to Change Status :</p>
                                     <p><input type="text" name="status_text" /> </p>
                                     <p><input type="submit" name="submit" value="Save and Return" class="btn btn-primary form-control"/></p>
-                                    </form>
-                                </div>
-
-
+                                </form>
                             </div>
 
- 
+
+                        </div>
+
+
                         <!-- /.container-fluid -->
 
                     </div>
                     <!-- End of Main Content -->
 
                     <!-- Footer -->
-                     <!-- End of Footer -->
+                    <!-- End of Footer -->
 
                 </div>
                 <!-- End of Content Wrapper -->
@@ -138,21 +112,18 @@
 
 
             <!-- Bootstrap core JavaScript-->
-<%
-    if(request.getParameter("submit")!=null){
-         String status = request.getParameter("status");
-         String status_text  = request.getParameter("status_text");
-         if(nd.updateNewsStatus(newsid, status, status_text)){ 
-             out.println("<script>alert('Status Updated');</script>");
-         // response.sendRedirect("AllNews.jsp");
-            
-         }        
-         else 
-             out.println("<script>alert('Status cannot be Updated');</script>");
-    }
-    
-    %>
-    <%}%>
-    </body>
+      
 
+
+    </body>
+    <% if (request.getParameter("submit") != null) {
+            nd = new NewsDao();
+            System.out.println(request.getParameter("status")+" and "+ request.getParameter("status_text"));
+            if (nd.updateNewsStatus(newsid, request.getParameter("status"), request.getParameter("status_text"))) {
+                System.out.println("status updated!");
+                //response.sendRedirect("AllNews.jsp");
+                return;
+            }
+        }
+    }%>
 </html>

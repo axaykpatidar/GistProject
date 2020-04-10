@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.http.HttpSession;
 
 public class ReporterDao {
 
@@ -388,7 +389,58 @@ public class ReporterDao {
         return status;
     }
     
-    
+        public boolean setNewPassword(String password,String userid) {
+        boolean status = false;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        cp.initialize();
+        Connection con = cp.getConnection();
+            
+        if (con != null) {
+            try {
+                String sql = "update Reporter set password=? where userid=?";
+                PreparedStatement smt = con.prepareStatement(sql);
+                smt.setString(1, password);
+                smt.setString(2, userid);
+                if (smt.executeUpdate() > 0) {
+                    System.out.println("updated!");
+                    status = true;
+                }
+                smt.close();
+                cp.releaseConnection(con);
+            } catch (Exception e) {
+                System.out.println("DBError :" + e.getMessage());
+            }
+        }
+
+        return status;
+    }
+        public boolean updateStatus(String ids[],String statuses[]){
+            boolean sts=false;
+            ConnectionPool cp = ConnectionPool.getInstance();
+        cp.initialize();
+        Connection con = cp.getConnection();
+        if (con != null) {
+            try {
+                con.setAutoCommit(false);
+                for(int i=0; i<ids.length && i<statuses.length; i++){
+                String sql = "update Reporter set status=? where id=?";
+                PreparedStatement smt = con.prepareStatement(sql);
+                smt.setString(1, statuses[i]);
+                smt.setString(2, ids[i]);
+                smt.executeUpdate();
+                }
+                con.commit();
+                cp.releaseConnection(con);
+            } catch (Exception ex) {
+                try{con.rollback();}catch(Exception e){System.out.println("Commit Error "+e);}
+                System.out.println("DBError :" + ex.getMessage());
+            }
+        }
+
+            
+            return sts;
+        }
+
    /* public static void main(String[] args) {
         ReporterDao rd = new ReporterDao();
         rd.ageCalcuater("08/01/1996");

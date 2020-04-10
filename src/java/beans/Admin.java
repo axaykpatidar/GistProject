@@ -2,20 +2,12 @@
 package beans;
 
 public class Admin {
- private int id;
  private String userid,password,name,image;
 
     public Admin() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public String getUserid() {
         return userid;
     }

@@ -138,7 +138,7 @@
             
            $("#search").click(function (){
                 $("#livenews").html("");
-            $.get("http://newsapi.org/v2/everything?q="+$("#keyword").val() +"&from=2020-03-03&to=2020-03-03&sortBy=popularity&apiKey=d031a2a296bf47d19d674f0a51e8d02f",function (responseText){
+            $.get("http://newsapi.org/v2/everything?q="+$("#keyword").val() +"&from=2020-03-22&to=2020-03-23&sortBy=popularity&apiKey=d031a2a296bf47d19d674f0a51e8d02f",function (responseText){
                    news =  responseText;
                    articles = news.articles;
                   // alert(articles[0].title);

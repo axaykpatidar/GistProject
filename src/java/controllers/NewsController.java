@@ -1,7 +1,7 @@
 package controllers;
 
-import beans.News;
-import daos.NewsDao;
+import beans.*;
+import daos.*;
 import utility.FileUploader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,7 +67,14 @@ public class NewsController extends HttpServlet {
             }
         }
         
-        
+        if(op!=null && op.equalsIgnoreCase("setPassword")){
+            String password = request.getParameter("password");
+            System.out.println("password:"+password);
+            HttpSession session = request.getSession();
+            Admin admin = (Admin)session.getAttribute("admin");
+            adminDao ad = new adminDao();
+             
+        }
         
            if(op!=null && op.equalsIgnoreCase("update")){
             HttpSession session = request.getSession();

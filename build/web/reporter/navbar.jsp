@@ -4,7 +4,7 @@
  
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-        <a class="nav-link" href="../home.jsp">news Home</a>
+        <a class="nav-link" href="../home.jsp">NEWS HOME</a>
     </li>
   </ul>
 

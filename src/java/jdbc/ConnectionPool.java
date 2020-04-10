@@ -56,12 +56,13 @@ public class ConnectionPool {
                 
                 String url = "jdbc:mysql://localhost:3306/gist";
                 Class.forName("com.mysql.jdbc.Driver");
-                
+                System.out.println("Going to create connection......");
                 connections = new Vector();
                 int count=0;
                 while(count<MAX_CONNECTION)
                 {
                     Connection con = DriverManager.getConnection(url,userName,password);
+                    System.out.println("Connection created....");
                     connections.addElement(con);
                     count++;
                 }

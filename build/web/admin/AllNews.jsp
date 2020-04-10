@@ -86,7 +86,7 @@
                       System.out.println("op:"+op);
                        if ( op==null || op.equals("")) {
                              newsList = ndo.getAllNews();
-                        } else if(op.equals("approved") || op.equals("rejected")){
+                        } else if(op.equals("approved") || op.equals("rejected") || op.equals("pending")){
                             newsList = ndo.getAllNews(op);
                         }
                       %>

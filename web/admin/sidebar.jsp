@@ -37,7 +37,7 @@
             <h6 class="collapse-header">Custom Reporters:</h6>
             <a class="collapse-item" href="addReporter.jsp">Add Reporters</a>
             <a class="collapse-item" href="viewReporters.jsp">View Reporters</a>
-            <a class="collapse-item" href="updateStatus.jsp">Update Status</a>
+            <a class="collapse-item" href="updateReporterStatus.jsp">Update Status</a>
           </div>
         </div>
       </li>

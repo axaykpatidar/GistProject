@@ -104,6 +104,26 @@
         font-weight: bold;
     }
         </style>
+     
+        <script> 
+        function checkRole() { 
+            var ele = document.getElementsByName('role'); 
+            var userid = document.getElementById('userid');
+            //alert(userid.value);
+                for(i = 0; i < ele.length; i++) { 
+                if(ele[i].checked){ 
+                if((ele[i].value)=="admin"){
+                    window.location.assign("admin/ForgetPassword.jsp?userid="+userid.value);
+                }else if((ele[i].value)=="reporter"){
+                    window.location.assign("reporter/ForgetPassword.jsp?userid="+userid.value);
+                }
+            } 
+            } 
+             } 
+        
+    </script>
+         
+        
         </head>
 
         <body>
@@ -137,10 +157,15 @@
     if(msg!=null)
         out.println("<font color='red' size='5' face='corbel'>"+msg+"</font>");
     %>
-    <form method="post">
-        <h2 class="text-center">Log in</h2>       
+     <jsp:useBean class="beans.Admin" id="admin1" scope="session"></jsp:useBean> 
+     <jsp:useBean class="beans.Reporter" id="reporter1" scope="session"></jsp:useBean>
+     <form method="post">
+    <jsp:setProperty name="admin1" property="*"></jsp:setProperty>
+    <jsp:setProperty name="reporter1" property="*"></jsp:setProperty>
+  
+         <h2 class="text-center">Log in</h2>       
         <div class="form-group">
-            <input type="text"  value="<%=userid%>" class="form-control" placeholder="userid" required="required" name="userid">
+            <input type="text" id="userid"  value="<%=userid%>" class="form-control" placeholder="userid" required="required" name="userid">
         </div>
         <div class="form-group">
             <input type="password" value="<%=password%>" class="form-control" placeholder="password" required="required" name="password"> 
@@ -150,13 +175,13 @@
             <input type="radio" name="role" id="role1" value="admin"> <label for="admin">Admin</label>
               <input type="radio" name="role" id="role2" value="reporter"> <label for="reporter">Reporter</label>
         </div>
-        
+         
         <div class="form-group">
             <button type="submit" name="submit" class="btn btn-primary btn-block">Log in</button>
         </div>
         <div class="clearfix">
             <label class="pull-left checkbox-inline"><input type="checkbox" name="remember" value="remember"> Remember me</label>
-            <a href="#" class="pull-right">Forgot Password?</a>
+            <a href="#" onclick="checkRole();" id="forget" class="pull-right">Forgot Password?</a>
         </div>        
        
     </form>
@@ -185,7 +210,7 @@
           else if(role.equals("admin")){
                adminDao ado = new adminDao();
                Admin admin = ado.getDetailsByLogin(userid, password);
-               System.out.println("admin"+admin);
+                System.out.println("admin"+admin);
                if(admin==null)
                    response.sendRedirect("newsLogin.jsp?msg=Invalid Userid or password");
                else {
@@ -230,7 +255,21 @@
           }
            
          
-      }%>
+      }
+        /* else
+         {
+              String role = request.getParameter("role");
 
+              if(role==null){      
+               response.sendRedirect("newsLogin.jsp?msg=Select any role");
+              } else if(role.equals("admin")){
+                  
+              }
+          
+         }
+  */
+         %>
+
+         
     </body>
  </html>

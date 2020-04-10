@@ -12,6 +12,10 @@
         <servlet-name>QueryController</servlet-name>
         <servlet-class>controllers.QueryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controllers.AdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewsController</servlet-name>
         <url-pattern>/NewsController</url-pattern>
@@ -24,6 +28,10 @@
         <servlet-name>QueryController</servlet-name>
         <url-pattern>/QueryController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/AdminController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -33,26 +41,19 @@
         <param-name>host</param-name>
         <param-value>smtp.gmail.com</param-value>
     </context-param>
-    
     <context-param>
         <param-name>port</param-name>
         <param-value>587</param-value>
     </context-param>
-   
-     <context-param>
+    <context-param>
         <param-name>user</param-name>
         <param-value>akshaykpatidar@gmail.com</param-value>
     </context-param>
-   
-     <context-param>
+    <context-param>
         <param-name>pass</param-name>
         <param-value>axay@756657</param-value>
     </context-param>
-   
     <welcome-file-list>
         <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
-    
-    
-    
 </web-app>

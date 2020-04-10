@@ -1,26 +1,31 @@
+ 
+
 <%-- 
     Document   : dashboard
     Created on : 7 Mar, 2020, 10:51:51 AM
     Author     : AKSHAY
 --%>
+<%@page import="daos.ReporterDao"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*,daos.NewsDao,beans.*,java.util.ArrayList"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    <jsp:include page="base.jsp"></jsp:include>
+            <script>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+                function submitForm() {
+                    document.getElementById("f1").submit();
+                }
 
+            </script>
+        </head>
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.6">
-    <title>Reporter Dashboard </title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/dashboard/">
 
     <!-- Bootstrap core CSS -->
-    <jsp:include page="base.jsp"></jsp:include>
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -69,8 +74,88 @@
   
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+         
         
+       
+            <form id="f1" method="get">
+                <div class="container"><br><br>
+                    <div class="row">
+                      
+                        <select onchange="submitForm();" name="cat_id" id="cat_id" class="dropdown dropdown-header form-control">
+                            <option value="-1" >select news category</option>
+                            <option value="">All News</option>
+                        <%
+
+                            NewsDao ndo = new NewsDao();
+                            ArrayList<NewsCategory> category = new ArrayList();
+                            category = ndo.getNewsCategory();
+                            for (NewsCategory cat : category) {%>
+                        <option value="<%=cat.getId()%>"><%=cat.getName()%><br/>
+
+                        <%}
+
+
+                        %>
+                    </select>
+
+                    <%                    
+                        int start = request.getParameter("start") != null ? Integer.parseInt(request.getParameter("start")) : 0;
+                        int end = 3;
+                        int total = ndo.getRecordCount();
+                        ArrayList<News> rows = new ArrayList();
+                         Reporter reporter = (Reporter)session.getAttribute("reporter");
+                        String cat_id = request.getParameter("cat_id");
+                        if (cat_id == null || cat_id.equals("")) {
+                            rows = ndo.getNewsByLimit(start, end, reporter.getId());
+                        } else {
+                            rows = ndo.getNewsByCategory(cat_id,reporter.getId());
+                        }
+
+                        //  System.out.println("rows:"+rows);
+                        for (News news : rows) {%>
+                    <div class="card col col-md-4">
+                        <img src="../<%=news.getImage()%>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%=news.getTitle()%></h5>
+                            <%
+                                String description = news.getDescription().trim();
+                                if (description.length() > 100) {
+                                    description = description.substring(0, 100);
+                                }
+                            %>
+                            <p class="card-text"><%=description%></p>
+                            <a href="../detailNews.jsp?id=<%=news.getId()%>" class="btn btn-primary">view more</a>
+                            <a href="../NewsController?id=<%=news.getId()%>&op=delete" class="btn btn-outline-danger">Delete</a>
+                            <a href="editNews.jsp?id=<%=news.getId()%>" class="btn btn-outline-primary">update</a>
+                        </div>
+                    </div>
+
+                    <% } %>
+
+                </div>
+            </div>
+
+
+            <center>
+                <%
+                    int pages = total / end + (total % end == 0 ? 0 : 1);
+                    for (int i = 0; i < pages; i++) {%>
+                <span style="text-decoration: none; align-content: center;  <% if (Math.floor(start / end) == i) {
+               out.println("background-color: orange");
+           }%>" class="btn btn-dark"><a href="viewNews.jsp?start=<%=end * i%>">Page <%=i + 1%></a></span> 
+                <%}
+                %>
+            </center>
+            <span style="float:left"><a href="viewNews.jsp?start=<%=start - end%>" class="btn btn-primary <% if (start == 0) {
+              out.println(" disabled");
+          }%> ">PREVIOUS</a></span>
+
+            <span style="float:right"><a href="viewNews.jsp?start=<%=start + end%>" class="btn btn-primary <% if (start + end >= total) {
+                out.println(" disabled");
+            }%> ">NEXT</a></span>
+           
+        </form>
+          
       </div>
 
       

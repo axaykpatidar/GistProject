@@ -208,7 +208,8 @@
 
                                                 <tr>
                                                     <td>Enter Reporter's Password </td>
-                                                    <td><input type="password" name="password" id="password" value="${reporter.password}" class="form-control"  /></td>
+                                                    <td><input type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" name="password" id="password" value="${reporter.password}" class="form-control"  />
+                                                      </br>  password must contains atleast one lower and 8 char and one special char</td>
                                                 </tr> 
 
                                                 <tr>

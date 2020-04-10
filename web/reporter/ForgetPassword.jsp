@@ -67,8 +67,7 @@
 
                 function sendOtp(x, y)
                 {
-                    alert(x);
-                    ajax = new XMLHttpRequest();
+                     ajax = new XMLHttpRequest();
                     ajax.open("GET", "../ReporterController?op=sendotp&email=" + x, true);
                     //alert(x);
                     ajax.send();
@@ -89,15 +88,13 @@
                     };
                 }
                 function validateOtp(x,y) {
-                    alert(x);
-                    alert(y);
                     x=x.trim();
                     y=y.trim();
+                    
                     if (x===y)
                     {
-                        alert('registered successfully...');
-                        div2.style.display = 'block';
-                                return  true;
+                       // window.location.assign("SetNewPassword.jsp");
+                       alert("matched!");
                     } else {
                         alert("Invalid Otp");
                         return false;
@@ -110,11 +107,11 @@
         <body>
 
         <%
-            if (session.getAttribute("reporter") == null) {
+           /* if (session.getAttribute("reporter") == null) {
                 response.sendRedirect("../newsLogin.jsp");
                 return;
             }
-        %>
+        */%>
 
         <jsp:include page="navbar.jsp"></jsp:include>
 
@@ -130,29 +127,29 @@
                         </div>
 
                     <%
-                        Reporter reporter = (Reporter) session.getAttribute("reporter");
+                          String userid = request.getParameter("userid");
+                         System.out.println(userid);
                     %>
                     <h2>Change Password</h2><br>
-
+                    
                     <span id="otp1" style="visibility: hidden"></span><br/> 
-                    <form class="form">
-
-                        <input type="text" name="email" readonly="readonly" id="email"  value="${reporter.email}"/> <br/><br>
+                    <%
+                    String uid = request.getParameter("userid");
+                    System.out.println("userid:"+uid);
+                    %>
+                    <form class="form" action="SetNewPassword.jsp">
+                        
+                        <input type="hidden" name="userid" value="<%=uid%>"><br>
+                        <input type="text" name="email" id="email" required="required"/> <br/><br>
                         <input type="button" value="Send OTP" name="otpbtn" class="btn btn-primary" onclick="sendOtp(email.value,s1);"/><br>
                         <span id="s1"> </span><br/>
 
                         <div id="div1" style="display: none">
                             Type OTP Here <input type="text" name="otp" id="otp"/> <br/>
-                            <input type="button" value="submit" name="validate" class="btn btn-primary" onclick="validateOtp(otp.value,otp1.innerHTML);"/>
+                            <input type="submit" value="submit" name="validate" class="btn btn-primary" onsubmit="validateOtp(otp.value,otp1.innerHTML);"/>
                         </div>
-                        <div id="div2" style="display: none">
-                            <input type="password" placeholder="  Enter New Password" name="password"><br><br>
-                            <input type="password" placeholder="Confirm Password   " name="cpassword"><br><br>
-                            <input type="submit" name="submit" value="submit" class="btn btn-primary">
-                        </div>
+                         
                     </form>
-                          
-
                 </main>
             </div>
         </div>

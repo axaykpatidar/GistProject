@@ -1,11 +1,11 @@
  
 
-<%@page import="daos.ReporterDao"%>
 <%-- 
     Document   : dashboard
     Created on : 7 Mar, 2020, 10:51:51 AM
     Author     : AKSHAY
 --%>
+<%@page import="daos.ReporterDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*,daos.NewsDao,beans.*,java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>

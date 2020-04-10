@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.ws.rs.core.Response;
 
 public class NewsDao {
 
@@ -847,10 +848,11 @@ public class NewsDao {
     
     public boolean updateNewsStatus(int id, String status,String statusText){
     boolean sts = false;
+        System.out.println("id:"+id  +"status:"+status +"text:"+statusText);
     ConnectionPool cp = ConnectionPool.getInstance();
         cp.initialize();
         Connection con = cp.getConnection();
-        System.out.println("cp:"+cp);
+        System.out.println("cp:"+con);
         if (con != null) {
            try {
                 String sql = "update news set status=?, status_text=? where id = ?";
@@ -858,12 +860,14 @@ public class NewsDao {
                 smt.setString(1, status);
                 smt.setString(2, statusText);
                 smt.setInt(3, id);
-                smt.executeUpdate();
-                
+               int n =  smt.executeUpdate();
+               System.out.println("n="+n);
+                if(n>0){
                 sts = true;
                 smt.close();
                 cp.releaseConnection(con);
-             //   System.out.println("status:"+sts);
+                System.out.println("status:"+sts);
+                }
             } catch (Exception e) {
                 
               System.out.println("Error " + e.getMessage());
