@@ -150,6 +150,7 @@ public class ReporterController extends HttpServlet {
             ReporterDao rd = new ReporterDao();
 
             String ImagePath = "";
+            System.out.println("request : "+request);
             ImagePath = FileUploader.getUploadedPath(getServletContext(), "media/reporter", request);
             reporter.setImage(ImagePath);
             

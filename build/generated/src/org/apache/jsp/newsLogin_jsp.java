@@ -154,7 +154,17 @@ public final class newsLogin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <script> \n");
       out.write("        function checkRole() { \n");
       out.write("            var ele = document.getElementsByName('role'); \n");
-      out.write("              alert(ele);\n");
+      out.write("            var userid = document.getElementById('userid');\n");
+      out.write("            //alert(userid.value);\n");
+      out.write("                for(i = 0; i < ele.length; i++) { \n");
+      out.write("                if(ele[i].checked){ \n");
+      out.write("                if((ele[i].value)==\"admin\"){\n");
+      out.write("                    window.location.assign(\"admin/ForgetPassword.jsp?userid=\"+userid.value);\n");
+      out.write("                }else if((ele[i].value)==\"reporter\"){\n");
+      out.write("                    window.location.assign(\"reporter/ForgetPassword.jsp?userid=\"+userid.value);\n");
+      out.write("                }\n");
+      out.write("            } \n");
+      out.write("            } \n");
       out.write("             } \n");
       out.write("        \n");
       out.write("    </script>\n");
@@ -227,7 +237,7 @@ public final class newsLogin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("  \n");
       out.write("         <h2 class=\"text-center\">Log in</h2>       \n");
       out.write("        <div class=\"form-group\">\n");
-      out.write("            <input type=\"text\"  value=\"");
+      out.write("            <input type=\"text\" id=\"userid\"  value=\"");
       out.print(userid);
       out.write("\" class=\"form-control\" placeholder=\"userid\" required=\"required\" name=\"userid\">\n");
       out.write("        </div>\n");
@@ -247,7 +257,7 @@ public final class newsLogin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        </div>\n");
       out.write("        <div class=\"clearfix\">\n");
       out.write("            <label class=\"pull-left checkbox-inline\"><input type=\"checkbox\" name=\"remember\" value=\"remember\"> Remember me</label>\n");
-      out.write("            <a href=\"#\" onclick=\"checkRole()\" id=\"forget\" class=\"pull-right\">Forgot Password?</a>\n");
+      out.write("            <a href=\"#\" onclick=\"checkRole();\" id=\"forget\" class=\"pull-right\">Forgot Password?</a>\n");
       out.write("        </div>        \n");
       out.write("       \n");
       out.write("    </form>\n");
@@ -285,6 +295,7 @@ public final class newsLogin_jsp extends org.apache.jasper.runtime.HttpJspBase
                else {
                      String remember = null;
                remember = request.getParameter("remember");
+               System.out.println("rem:"+remember);
               if (remember != null && remember.equalsIgnoreCase("remember")) {
                         Cookie c = new Cookie("userid", userid);
                         Cookie c2 = new Cookie("password", password);

@@ -16,6 +16,10 @@
         <servlet-name>AdminController</servlet-name>
         <servlet-class>controllers.AdminController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PaymentController</servlet-name>
+        <servlet-class>controllers.PaymentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewsController</servlet-name>
         <url-pattern>/NewsController</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>AdminController</servlet-name>
         <url-pattern>/AdminController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentController</servlet-name>
+        <url-pattern>/PaymentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

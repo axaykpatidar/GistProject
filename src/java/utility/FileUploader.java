@@ -24,8 +24,9 @@ public class FileUploader {
                      FileItemFactory factory = new DiskFileItemFactory();
                     ServletFileUpload upload = new ServletFileUpload(factory);
                     List items = null;
+                 //   System.out.println("req:"+request);
                     items = upload.parseRequest(request);
-                //System.out.println("multi op="+op); 
+                System.out.println("multi op="+items); 
                     Iterator itr = items.iterator();
                     while (itr.hasNext()) {
                         FileItem item = (FileItem) itr.next();

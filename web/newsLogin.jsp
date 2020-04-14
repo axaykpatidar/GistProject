@@ -216,6 +216,7 @@
                else {
                      String remember = null;
                remember = request.getParameter("remember");
+               System.out.println("rem:"+remember);
               if (remember != null && remember.equalsIgnoreCase("remember")) {
                         Cookie c = new Cookie("userid", userid);
                         Cookie c2 = new Cookie("password", password);
